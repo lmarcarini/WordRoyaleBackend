@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer, {
-  cors: { origin: "*" },
+  cors: { origin: "https://word-royale-frontend.herokuapp.com/" },
 });
 const fs = require("fs");
 const answers = fs
