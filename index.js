@@ -3,11 +3,7 @@ const app = express();
 const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://word-royale-frontend.herokuapp.com/",
-    ],
-    credentials: true,
+    origin: ["localhost:3000", "word-royale-frontend.herokuapp.com/"],
   },
   transports: ["websocket", "polling", "flashsocket"],
 });
