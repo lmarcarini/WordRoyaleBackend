@@ -2,7 +2,14 @@ const express = require("express");
 const app = express();
 const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer, {
-  cors: { origin: "https://word-royale-frontend.herokuapp.com/" },
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://word-royale-frontend.herokuapp.com/",
+    ],
+    credentials: true,
+  },
+  transports: ["websocket", "polling", "flashsocket"],
 });
 const fs = require("fs");
 const answers = fs
@@ -98,5 +105,5 @@ io.on("connection", (socket) => {
 
 //start listening
 httpServer.listen(PORT, () => {
-  console.log("listening on *:8080");
+  console.log("listening");
 });
