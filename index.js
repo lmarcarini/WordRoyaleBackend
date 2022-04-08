@@ -15,6 +15,11 @@ const answers = fs
   .readFileSync("./wordle-answers-alphabetical.txt", "utf8")
   .split("\n");
 const PORT = process.env.PORT || 80;
+const router = express.Router();
+
+router.get("/", (req, res) => {
+  res.send({ response: "I am alive" }).status(200);
+});
 
 let queue = [];
 //create a random id for the room
