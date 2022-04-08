@@ -5,7 +5,7 @@ const io = require("socket.io")(httpServer, {
   cors: {
     origin: [
       "https://localhost:3000",
-      "https://word-royale-frontend.herokuapp.com/",
+      "https://word-royale-frontend.herokuapp.com",
     ],
   },
   transports: ["websocket", "polling", "flashsocket"],
