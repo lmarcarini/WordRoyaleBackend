@@ -11,7 +11,7 @@ const fs = require("fs");
 const answers = fs
   .readFileSync("./wordle-answers-alphabetical.txt", "utf8")
   .split("\n");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 80;
 
 let queue = [];
 //create a random id for the room
