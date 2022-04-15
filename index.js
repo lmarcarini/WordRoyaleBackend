@@ -109,5 +109,5 @@ io.on("connection", (socket) => {
 
 //start listening
 httpServer.listen(PORT, () => {
-  console.log("listening");
+  console.log(`listening at ${PORT}`);
 });
