@@ -4,7 +4,7 @@ const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer, {
   cors: {
     origin: [
-      "https://localhost:3000",
+      "http://localhost:3000",
       "https://word-royale-frontend.herokuapp.com",
     ],
   },
@@ -14,7 +14,7 @@ const fs = require("fs");
 const answers = fs
   .readFileSync("./wordle-answers-alphabetical.txt", "utf8")
   .split("\n");
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -42,10 +42,12 @@ io.on("connection", (socket) => {
   socket.on("guess", (guess, room) => {
     //send guess to all clients
     socket.to(room).emit("guess", socket.id, guess);
-    if (guess === "OOOOO") {
+    if (guess.join("") === "OOOOO") {
       socket.to(room).emit("winner", socket.id);
     }
   });
+
+  let timeout;
 
   //listen for players joining
   socket.on("join", (join) => {
@@ -70,13 +72,18 @@ io.on("connection", (socket) => {
     queue.push(player);
     socket.to(room).emit("players", queue);
     //if room is full, start the game
-    if (queue.length === 3) {
-      //start game
+    const startGame = () => {
       io.emit("start", queue);
       queue = [];
       room = createRoomId();
       answer = answers[Math.floor(Math.random() * answers.length)];
-    }
+    };
+    if (queue.length === 3) {
+      //start game
+      clearTimeout(timeout);
+      startGame();
+    } else timeout = setTimeout(startGame, 40000);
+    console.log(answer);
   });
 
   socket.on("restart", () => {
